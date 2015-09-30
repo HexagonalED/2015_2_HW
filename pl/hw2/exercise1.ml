@@ -8,3 +8,4 @@ let rec crazy2val : crazy2 -> int = fun c ->
   | MONE(cin) -> 2*(crazy2val cin)-1
 ;;
 
+

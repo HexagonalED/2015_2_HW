@@ -15,4 +15,3 @@ let checkMetro : metro -> bool = fun met ->
   | STATION(namestr) -> true
   | _ -> checkMetroIn(met,[])
 ;;
-
