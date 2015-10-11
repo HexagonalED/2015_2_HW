@@ -169,34 +169,34 @@ struct
   let emptyMemory = Mem.empty
   let emptyEnv = Env.empty
 
-  let value_int v =
+  let value_int v =(*get int value*)
     match v with
     | Num n -> n
     | _ -> raise (Error "TypeError : not int")
 
-  let value_bool v =
+  let value_bool v = (* get boolvalue *)
     match v with
     | Bool b -> b
     | _ -> raise (Error "TypeError : not bool")
 
-  let value_unit v =
+  let value_unit v = (*get unit value*)
       match v with
       | Unit -> ()
       | _ -> raise (Error "TypeError : not unit")
 
-  let value_record v =
+  let value_record v = (*get record value *)
       match v with
       | Record r -> r
       | _ -> raise (Error "TypeError : not record")
 
-  let lookup_env_loc e x =
+  let lookup_env_loc e x = (* look for the val in address => Loc.t(Location of int) type*)
     try
       (match Env.lookup e x with
       | Addr l -> l
       | Proc _ -> raise (Error "TypeError : not addr")) 
     with Env.Not_bound -> raise (Error "Unbound")
 
-  let lookup_env_proc e f =
+  let lookup_env_proc e f = (* get id,exp,env*)
     try
       (match Env.lookup e f with
       | Addr _ -> raise (Error "TypeError : not proc") 
@@ -222,6 +222,27 @@ struct
       let (v, mem') = eval mem env e in
       let l = lookup_env_loc env x in
       (v, Mem.store mem' l v)
+    | ADD (e1,e2) -> 
+        NUM((value_int (eval mem env e1))+(value_int (eval mem env e2)))
+    | SUB (e1,e2) ->
+        NUM((value_int (eval mem env e1))-(value_int (eval mem env e2)))
+    | MUL (e1,e2) ->
+        NUM((value_int (eval mem env e1))*(value_int (eval mem env e2)))
+    | DIV (e1,e2) ->
+        NUM((value_int (eval mem env e1))/(value_int (eval mem env e2)))
+(*
+    | EQUAL (e1,e2) ->
+    | LESS (e1,e2) ->
+    | NOT e ->
+    | SEQ (e1,e2) ->
+    | IF (e1,e2,e3) ->
+    | WHILE (e1,e2) ->
+    | LETF (x,xl,e1,e2) ->
+    | CALLV (x,el) ->
+    | CALLR (x,xl) ->
+    | RECORD xel ->
+    | FIELD (e,x) ->
+    | ASSIGNF (e1,x,e2) ->*)
     | _ -> failwith "Unimplemented" (* TODO : Implement rest of the cases *)
 
   let run (mem, env, pgm) = 
