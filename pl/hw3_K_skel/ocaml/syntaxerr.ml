@@ -1,0 +1,2 @@
+exception Error of string;;
+

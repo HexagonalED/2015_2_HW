@@ -1,0 +1,41 @@
+let proc leaf(n)=
+	{value:=n, left:={}, right:={}} in
+let proc makeLtree(n,t)=
+	{value:=n, left:=t, right:={}} in
+let proc makeRtree(n,t)=
+	{value:=n,left:={},right:=t} in
+let proc makeTree(n,t1,t2)=
+	{value:=n,left:=t1,right:=t2} in
+let proc isEmpty(t)=
+	if t={} then true else false in
+let proc rTree(t)=
+	t.right in
+let proc lTree(t)=
+	t.left in
+let proc nodeVal(t)=
+	t.value in
+let proc dft(t)=
+	if (not isEmpty(t)) then (write(nodeVal(t);unit) else unit;
+	if (not isEmpty(t.left)) then dft(t.left) else unit;
+	if (not isEmpty(t.right)) then dft(t.right) else unit in
+let proc bft(t)=
+	queue:={tree:=t, next:={}};
+	n:=queue.next;
+	while (not isEmpty(queue.tree)) do
+	(
+		 write(queue.value);
+		 if (not isEmpty(t.left)) then 
+		 (
+		  n.tree:=t.left;
+		  n:=n.next
+		 )
+		 else unit;
+		 if (not isEmpty(t.right)) then
+		 (
+		  n.tree:=t.right;
+		  n:=n.next
+		 )
+		 else unit;
+		 queue:=queue.next
+	) in
+let lf:=leaf(2) in write(nodeVal (lf))

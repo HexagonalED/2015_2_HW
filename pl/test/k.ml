@@ -222,13 +222,9 @@ struct
       let (v, mem') = eval mem env e in
       let l = lookup_env_loc env x in
       (v, Mem.store mem' l v)
+
 (* start custom *)
 
-    | NUM(n) -> (Num(n),mem)
-    | TRUE -> (Bool(true),mem)
-    | FALSE -> (Bool(false),mem)
-    | UNIT -> (Unit,mem)
-    | VAR(x) -> ((Mem.load mem (lookup_env_loc env x)),mem)
     | ADD (e1,e2) -> 
         let (val1, mem1) = (eval mem env e1) in 
         let (val2, mem2) = (eval mem1 env e2) in
@@ -318,11 +314,11 @@ struct
                       (eval mem (Env.bind (matchenv idlist xl newenv) x (Proc(idlist,newexp,newenv))) newexp)
     | RECORD xel -> if xel = [] then (Unit,mem) 
                     else
-                      (let rec reclist m iexl = 
+                      (let rec reclist m e iexl = 
                           match iexl with
                           | [] -> []
-                          | (hdid, hdexp)::tl -> let (nv,nm) = (eval m env hdexp) in
-                                                 ((nv,nm)::(reclist nm tl)) in
+                          | (hdid, hdexp)::tl -> let (nv,nm) = (eval m e hdexp) in
+                                                 ((nv,nm)::(reclist nm e tl)) in
                       let rec matching recl iexl m_in =
                           match recl with
                           | [] -> (match iexl with
@@ -339,7 +335,7 @@ struct
                                                                       (let (l,nm') = (Mem.alloc nm) in 
                                                                       (Record(fun x -> if x= hdid then l else ((value_record nv) x)), (Mem.store nm' l v))))
                       in
-                      (matching (reclist mem xel) xel mem))
+                      (matching (reclist mem env xel) xel))
     | FIELD (e,x) -> 
         let (v,m) = (eval mem env e) in
         (Mem.load m ((value_record v) x), m)

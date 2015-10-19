@@ -1,0 +1,6 @@
+let proc leaf(i) = 
+in
+let proc bft(t) =
+in
+let proc dft(t) =
+
