@@ -1,6 +1,40 @@
 let proc leaf(i) = 
+  {key:=i, lt:={}, rt:={}}
 in
-let proc bft(t) =
+let proc makeLtree(i,t) = 
+  {key:=i, lt:=t, rt:={}}
 in
-let proc dft(t) =
+let proc makeRtree(i,t) = 
+  {key:=i, lt:={}, rt:=t}
+in
+let proc makeTree(i,tl,tr) =
+  {key:=i,lt:=tl,rt:=tr}
+in
 
+let proc isEmpty(t) =
+  if t={} then true else false
+in
+let proc rTree(t) =
+ if isEmpty(t) then unit else t.rt
+in
+let proc lTree(t) =
+ if isEmpty(t) then unit else t.lt
+in
+let proc nodeVal(t) =
+ if isEmpty(t) then unit else t.key
+in
+
+let proc dft(t) =
+  if isEmpty(t) then unit
+  else (write (nodeVal(t)));
+
+  if isEmpty(t.lt) then unit
+  else dft(t.lt);
+
+  if isEmpty(t.rt) then unit
+  else dft(t.rt)
+in
+
+let proc bft(t)=
+  write(nodeVal(t))
+	in let t0:=makeTree(0, (makeTree(1, leaf(2), leaf(3))), leaf(4)) in dft(t0)
