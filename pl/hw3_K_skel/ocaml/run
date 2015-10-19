@@ -1,0 +1,9 @@
+#!/bin/csh
+# by gla 
+
+  foreach hw ( "hw2" "hw3" "hw4" "hw5" "hw6" "hw7" "hw8" "hw9" "hw10" )
+    # echo 101/$hw/"zwitterion27.ml"
+    #./clonechecker -is 0.01 -s 101/$hw/"zwitterion27.ml" -d 101/allhw/ > $hw.txt
+  end 
+
+
