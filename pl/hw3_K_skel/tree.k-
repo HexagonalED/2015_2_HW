@@ -37,4 +37,4 @@ in
 
 let proc bft(t)=
   write(nodeVal(t))
-	in let t0:=makeTree(0, (makeTree(1, leaf(2), leaf(3))), leaf(4)) in dft(t0)
+	in 2015
