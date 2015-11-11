@@ -182,7 +182,7 @@ struct
       ((!loc_id, 0), m)
     else
       let _ = reachable_locs := [] in
-      let rec GCAlgR li loc = 
+  (*    let rec GCAlgR li loc = 
         if (not(List.mem loc li)) then (GCAlgS (loc::li) (load loc m)::s)
       in
       let rec GCAlgS li s = 
@@ -194,7 +194,7 @@ struct
                      | M (ml) ->
                      | _ -> (GCAlgS li tl)
         | [] -> li in
-
+*)
       let new_m = List.filter (fun (l, _) -> List.mem l !reachable_locs) m in
       if List.length new_m < mem_limit then
         let _ = loc_id := !loc_id + 1 in

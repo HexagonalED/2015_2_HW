@@ -40,7 +40,9 @@ module Translator = struct
         [Sm5.PUSH (Sm5.Id(f));Sm5.PUSH (Sm5.Id f)] @ trans arg_exp @ [Sm5.MALLOC ; Sm5.CALL]
     | K.WRITE(e) -> (*!*)
         trans e @ [Sm5.MALLOC ; Sm5.BIND("lise") ; Sm5.PUSH (Sm5.Id("lise"));Sm5.STORE;Sm5.PUSH(Sm5.Id("lise"));Sm5.LOAD;Sm5.PUSH(Sm5.Id("lise"));Sm5.LOAD;Sm5.PUT]
-(*    | K.WHILE(cond,eBody) -> (*!*)
-    | K.FOR(x,e1,e2,eBody) -> (*!*)*)
+(*    | K.WHILE(cond,eBody) -> 
+        trans (K.LETF(
+        
+    | K.FOR(x,e1,e2,eBody) -> *)
     | _ -> failwith "Unimplemented"
 end
