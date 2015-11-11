@@ -182,9 +182,19 @@ struct
       ((!loc_id, 0), m)
     else
       let _ = reachable_locs := [] in
-      (* TODO : Add the code that marks the reachable locations.
-       * let _ = ... 
-       *)
+      let rec GCAlgR li loc = 
+        if (not(List.mem loc li)) then (GCAlgS (loc::li) (load loc m)::s)
+      in
+      let rec GCAlgS li s = 
+        match s with
+        | hd::tl -> (match hd with
+                     | V (R r) -> List.map (GCAlgR li) r
+                     | V (L l) -> (GCAlgR li l)
+                     | P (x,c,e) -> 
+                     | M (ml) ->
+                     | _ -> (GCAlgS li tl)
+        | [] -> li in
+
       let new_m = List.filter (fun (l, _) -> List.mem l !reachable_locs) m in
       if List.length new_m < mem_limit then
         let _ = loc_id := !loc_id + 1 in
@@ -214,7 +224,7 @@ struct
       base1 = base2 && z1 = z2
     | _ , _ -> false
 
-  let rec step = function
+  let  rec step = function
     | (s, m, e, PUSH (Val v) :: c, k) -> (V v :: s, m, e, c, k)
     | (s, m, e, PUSH (Id x) :: c, k) ->
       (match lookup_env x e with
